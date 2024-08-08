@@ -1,0 +1,54 @@
+{% extends 'nav.html' %}
+
+{% block nav %}
+<div class="order-success-container">
+    <div class="order-success-header">
+        <h1>Order Placed Successfully!</h1>
+    </div>
+    <div class="order-success-content">
+        <p>Thank you for your order. Your order number is <strong>{{ order.id }}</strong>.</p>
+        <p>We will send you an email with the order details and tracking information.</p>
+        <p>
+            <a href="{% url 'order_details' order.id %}" class="btn btn-primary">View Order Details</a>
+        </p>
+    </div>
+</div>
+
+<style>
+.order-success-container {
+    max-width: 800px;
+    margin: 50px auto;
+    padding: 20px;
+    text-align: center;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.order-success-header h1 {
+    font-size: 2em;
+    font-weight: 400;
+    margin-bottom: 20px;
+}
+
+.order-success-content p {
+    font-size: 1.2em;
+    line-height: 1.5;
+    margin-bottom: 20px;
+}
+
+.order-success-content a.btn-primary {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #000;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.order-success-content a.btn-primary:hover {
+    background-color: #444;
+}
+</style>
+{% endblock nav %}

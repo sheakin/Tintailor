@@ -1,0 +1,106 @@
+{% extends 'nav.html' %}
+
+{% block nav %}
+<div class="order-details-container">
+  <h1>Order Details</h1>
+  <p>Order Number: <strong>{{ order.id }}</strong></p>
+  <table class="order-details-table">
+    <thead>
+      <tr>
+        <th>Product</th>
+        <th>Quantity</th>
+        <th>Price</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for item in order_items %}
+      <tr>
+        <td>{{ item.product.title }}</td>
+        <td>{{ item.quantity }}</td>
+        <td>{{ item.price }}</td>
+      </tr>
+      {% endfor %}
+      <tr>
+        <th>Total</th>
+        <td colspan="2">{{ order.total_price }}</td>
+      </tr>
+    </tbody>
+  </table>
+  <a href="{% url 'chome' %}" class="continue-shopping d-flex justify-content-center">Continue Shopping</a>
+
+</div>
+
+<style>
+.order-details-container {
+  max-width: 800px;
+  margin: 40px auto;
+  padding: 20px;
+  background-color: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.order-details-container h1 {
+  font-size: 24px;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.order-details-container p {
+  font-size: 16px;
+  margin-bottom: 20px;
+  color: #666;
+}
+
+.order-details-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.order-details-table th,
+.order-details-table td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.order-details-table th {
+  background-color: #f5f5f5;
+  font-weight: bold;
+}
+
+.order-details-table tr:last-child th,
+.order-details-table tr:last-child td {
+  border-bottom: none;
+  font-weight: bold;
+}
+
+.order-details-table td {
+  color: #333;
+}
+
+.order-details-table td:last-child {
+  text-align: right;
+}
+.continue-shopping,
+  .order-now {
+    display: inline-block; 
+    padding: 10px 20px;
+    background-color: #000; 
+    color: #fff; 
+    text-decoration: none;
+    border-radius: 5px;
+    border: none;
+    text-align: center;
+    margin: 10px 5px;
+  }
+
+  .continue-shopping:hover,
+  .order-now:hover {
+    background-color: #333; 
+  }
+</style>
+{% endblock nav %}
+
+

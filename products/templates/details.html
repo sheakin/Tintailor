@@ -1,0 +1,148 @@
+{% extends 'nav.html' %}
+
+{% block nav %}
+  <style>
+    .category-detail {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+    .category-images {
+      flex: 1;
+      min-width: 300px;
+      text-align: center;
+    }
+    .category-info {
+      flex: 1.2;
+      min-width: 300px;
+    }
+    .category-images img {
+      max-width: 78%; /* Reduce the maximum width of the main image */
+      max-height: 600px; /* Set a maximum height for the main image */
+      height: auto;
+      width: auto;
+    }
+    .thumbnails {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 10px;
+    }
+    .thumbnails img {
+      width: 160px;
+      height: auto;
+      cursor: pointer;
+      border: 1px solid #ddd;
+      padding: 5px;
+      transition: border-color 0.3s;
+    }
+    .thumbnails img:hover {
+      border-color: #333;
+    }
+    .category-info h1 {
+      margin-top: 0;
+    }
+    .category-info p {
+      margin: 5px 0;
+    }
+    .category-reviews {
+      margin-top: 20px;
+    }
+    .long-description {
+      display: none;
+      margin: 10px 0;
+    }
+    input[type="checkbox"] {
+      display: none;
+    }
+    input[type="checkbox"]:checked ~ .long-description {
+      display: block;
+    }
+    input[type="checkbox"]:checked ~ .see-more {
+      display: none;
+    }
+    input[type="checkbox"]:checked ~ .see-less {
+      display: inline;
+    }
+    .see-more, .see-less {
+      cursor: pointer;
+      color: black;
+      text-decoration: underline;
+    }
+    .action-button {
+      display: inline-block;
+      padding: 10px 20px;
+      margin-top: 10px;
+      margin-right: 10px;
+      background-color: black; 
+      color: #ffffff; 
+      text-decoration: none;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      text-align: center;
+    }
+    .action-button:hover {
+      background-color: #cc0000; 
+    }
+    .wishlist-button {
+      background-color: #ff0000; 
+    }
+    .wishlist-button:hover {
+      background-color: #0000cc; 
+    }
+  </style>
+
+  <div class="category-detail">
+    <div class="category-images">
+      <img src="{{ category.image.url }}" alt="{{ category.title }}" id="main-image">
+      <div class="thumbnails">
+        <img src="{{ category.image.url }}" alt="{{ category.title }}">
+        <img src="{{ category.image.url }}" alt="{{ category.title }}">
+        <img src="{{ category.image.url }}" alt="{{ category.title }}">
+      </div>
+    </div>
+    <div class="category-info">
+      <h1>{{ category.title }}</h1>
+      <h4>{{ category.description_short }}</h4>
+      <h6>Description & Details</h6>
+      <label for="see-more-checkbox" class="see-more">See More</label>
+      <label for="see-more-checkbox" class="see-less" style="display: none;">See Less</label>
+      <input type="checkbox" id="see-more-checkbox">
+      <div class="long-description">
+        {% for point in category.description_long.splitlines %}
+          <p>{{ point }}</p>
+        {% endfor %}
+      </div>
+      <p>Price: Rs {{ category.price }} /-</p>
+      <form action="{% url 'add_to_cart' category.pk %}" method="post" style="display:inline;">
+        {% csrf_token %}
+        <label for="size">Select Size:</label>
+        <select name="size" id="size">
+          <option value="s">S</option>
+          <option value="m">M</option>
+          <option value="l">L</option>
+        </select>
+        <button type="submit" class="action-button">Add to Cart</button>
+      </form>
+      <form action="{% url 'add_to_wishlist' category.pk %}" method="post" style="display:inline;">
+        {% csrf_token %}
+        <button type="submit" class="action-button wishlist-button">Add to Wishlist</button>
+      </form>
+
+      <div class="category-reviews">
+        <h2>Reviews</h2>
+        <ul>
+          <li>
+            <p>Rating: 4/5</p>
+            <p>Good product</p>
+          </li>
+          <li>
+            <p>Rating: 5/5</p>
+            <p>good material</p>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+{% endblock nav %}

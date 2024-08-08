@@ -1,0 +1,9 @@
+<!-- update_cart_item.html -->
+
+<h1>Update Cart Item</h1>
+
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Update</button>
+</form>

@@ -1,0 +1,140 @@
+{% extends 'nav.html' %}
+
+{% block nav %}
+<!-- cart.html -->
+<style>
+  table {
+    border-collapse: collapse;
+    width: 90%; 
+    margin: 0 auto; 
+  }
+
+  th, td {
+    padding: 15px; 
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+  }
+
+  th {
+    background-color: #f7f7f7;
+    font-weight: bold;
+  }
+
+  .total-price-container {
+    text-align: center; 
+    margin-top: 20px;
+  }
+
+  .total-price {
+    font-weight: bold;
+    font-size: 18px;
+    color: #333;
+    display: inline-block; 
+    margin-right: 20px; 
+  }
+
+  .continue-shopping,
+  .order-now {
+    display: inline-block; 
+    padding: 10px 20px;
+    background-color: #000; 
+    color: #fff; 
+    text-decoration: none;
+    border-radius: 5px;
+    border: none;
+    text-align: center;
+    margin: 10px 5px; 
+  }
+
+  .continue-shopping:hover,
+  .order-now:hover {
+    background-color: #333; 
+  }
+
+  .product-image {
+    width: 80px;
+    height: 80px;
+    margin-right: 10px;
+  }
+
+  .product-info {
+    display: flex;
+    align-items: center;
+  }
+
+  .quantity-input {
+    width: 50px;
+    height: 30px;
+    padding: 5px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    text-align: center;
+  }
+
+  .action-links {
+    margin-bottom: 10px;
+  }
+
+  .action-button {
+    display: inline-block;
+    padding: 5px 10px;
+    margin-right: 5px;
+    background-color: #f0f0f0;
+    border: 1px solid #ddd;
+    text-decoration: none;
+    color: #333;
+    border-radius: 5px;
+  }
+
+  .action-button:hover {
+    background-color: #e0e0e0;
+  }
+</style>
+
+<h1 style="text-align: center;">Shopping Cart</h1>
+
+<table>
+  <tr>
+    <th>Product</th>
+    <th>Quantity</th>
+    <th>Price</th>
+    <th>Total</th>
+    <th>Action</th>
+  </tr>
+  {% for item in cart_items %}
+  <tr>
+    <td>
+      <div class="product-info">
+        <img src="{{ item.product.image.url }}" alt="{{ item.product.title }}" class="product-image">
+        <div>
+          <p>{{ item.product.title }}</p>
+        </div>
+      </div>
+    </td>
+    <td>
+      <input type="number" value="{{ item.quantity }}" class="quantity-input" min="1">
+    </td>
+    <td>{{ item.product.price }}</td>
+    <td>{{ item.total_price }}</td>
+    <td>
+      <div class="action-links">
+        <a href="{% url 'update_cart_item' item.pk %}" class="action-button">Update</a>
+        <a href="{% url 'remove_from_cart' item.pk %}" class="action-button">Remove</a>
+      </div>
+    </td>
+  </tr>
+  {% empty %}
+  <tr>
+    <td colspan="5">Your cart is empty.</td>
+  </tr>
+  {% endfor %}
+</table>
+
+<div class="total-price-container">
+  <p class="total-price">Total Price: {{ total_price }}</p>
+  <a href="{% url 'checkout_view' %}" class="order-now">Order Now</a>
+</div>
+
+<a href="{% url 'chome' %}" class="continue-shopping d-flex justify-content-center">Continue Shopping</a>
+
+{% endblock nav %}
